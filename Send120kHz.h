@@ -25,7 +25,6 @@ private:
     int x10UnitArray[10] = {0};
     void getx10Communication(int unit, bool pir, int lightLevel);
     //void SendSignal();
-    int x10CommunacationArray[30] = {0};
     int x10Index = 0;
     int stopSending = 1;
     //int *totalX10Communication;

@@ -10,7 +10,7 @@
 #include <stdint.h>
 //#include <wiringPi.h>
 
-
+void x10Interrupt();
 /*
 void SendSignal();*/
 Send120kHz::Send120kHz(QWidget *parent) : QWidget(parent){
@@ -31,6 +31,7 @@ Send120kHz::Send120kHz(QWidget *parent) : QWidget(parent){
     connect(stopSignal, &QPushButton::clicked, this, &Send120kHz::StopSignal);
     connect(getInt, &QPushButton::clicked, this, &Send120kHz::handleInputInt);
     setLayout(mainLayout);
+   // int wiringPiISR(17,INT_EDGE_RISING,(x10Interrupt()));
 }
 
 /*void SendSignal() {
@@ -54,7 +55,7 @@ Send120kHz::Send120kHz(QWidget *parent) : QWidget(parent){
 
 
 }*/
-
+int x10CommunacationArray[30] = {0};
 void Send120kHz::StopSignal(){
     //pwmWrite(18,0);
     stopSending = 1;
@@ -143,6 +144,13 @@ void Send120kHz::handleInputInt() {
     input = brightness->text().toInt();
 
     getx10Communication(20,0,input);
+    printf("\n");
+    printf("Dette er x10signalet:");
+    for (int i = 0; i <30 ; ++i) {
+        x10Interrupt();
+    }
+    printf("\n");
+
 
 /*
     printf("Værdier tilbage:\n");
@@ -264,3 +272,19 @@ printf("dette er x10 arrayet:");
         printf("%d",x10CommunacationArray[q]);
     }
 }
+int x10interruptCount=0;
+
+void x10Interrupt(){
+    if(x10interruptCount>29){
+        x10interruptCount=0;
+    }
+        if(x10CommunacationArray[x10interruptCount]==0){
+            //digitalWrite(22,LOW);
+            printf("0");
+        }
+        else if(x10CommunacationArray[x10interruptCount]==1){
+            //digitalWrite(22,HIGH);
+            printf("1");
+        }
+        x10interruptCount++;
+    }
