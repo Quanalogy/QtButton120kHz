@@ -32,6 +32,7 @@ Send120kHz::Send120kHz(QWidget *parent) : QWidget(parent){
     connect(getInt, &QPushButton::clicked, this, &Send120kHz::handleInputInt);
     setLayout(mainLayout);
    // int wiringPiISR(17,INT_EDGE_RISING,(x10Interrupt()));
+   // int waitForInterrupt(17,-1);
 }
 
 /*void SendSignal() {
